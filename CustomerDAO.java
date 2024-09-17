@@ -4,11 +4,13 @@ import java.util.List;
 
 public class CustomerDAO {
     private Connection conn;
+    private AccountDAO accountDAO;
 
-    public CustomerDAO (Connection conn) {
+    public CustomerDAO(Connection conn) {
         this.conn = conn;
+        this.accountDAO = new AccountDAO(conn);
     }
-    
+
     public void addCustomer(Customer customer) throws SQLException {
         String sql = "INSERT INTO YA_Customer (Surname, Name, Gender, Birthday) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
