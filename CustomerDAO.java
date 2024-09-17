@@ -49,15 +49,22 @@ public class CustomerDAO {
 
 
     public List<Customer> getAllCustomers() throws SQLException {
-        String sql = "SELECT * FROM YA_Customer";
-        List<Customer> customers = new ArrayList<>();
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
-            while (rs.next()) {
-                customers.add(mapResultSetToCustomer(rs));
-            }
+    String sql = "SELECT * FROM YA_Customer";
+    List<Customer> customers = new ArrayList<>();
+    try (PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+        while (rs.next()) {
+            Customer customer = mapResultSetToCustomer(rs);
+
+            // Konten des Kunden laden
+            List<Account> accounts = accountDAO.getAccountsByCustomerID(customer.getID());
+            customer.setAccounts(accounts);
+
+            customers.add(customer);
         }
-        return customers;
     }
+    return customers;
+}
+
 
     public void updateCustomer(Customer customer) throws SQLException {
         String sql = "UPDATE YA_Customer SET Surname = ?, Name = ?, Gender = ?, Birthday = ? WHERE ID = ?";
