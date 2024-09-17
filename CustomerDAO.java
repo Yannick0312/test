@@ -27,17 +27,24 @@ public class CustomerDAO {
     }
 
     public Customer getCustomerByID(int id) throws SQLException {
-        String sql = "SELECT * FROM YA_Customer WHERE ID = ?";
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return mapResultSetToCustomer(rs);
-            } else {
-                return null;
-            }
+    String sql = "SELECT * FROM YA_Customer WHERE ID = ?";
+    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, id);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            Customer customer = mapResultSetToCustomer(rs);
+
+            // Konten des Kunden laden
+            List<Account> accounts = accountDAO.getAccountsByCustomerID(id);
+            customer.setAccounts(accounts);
+
+            return customer;
+        } else {
+            return null;
         }
     }
+}
+
 
     public List<Customer> getAllCustomers() throws SQLException {
         String sql = "SELECT * FROM YA_Customer";
