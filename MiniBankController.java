@@ -124,42 +124,36 @@ public class MiniBankController {
 
     // Method to show specific customer data
     public void showCustomerData(Scanner sc) {
-        try {
-            System.out.println("\n--- Show Customer Data ---");
-            System.out.print("Customer ID: ");
-            int customerId = Integer.parseInt(sc.nextLine());
-            Customer customer = customerDAO.getCustomerByID(customerId);
+    try {
+        System.out.println("\n--- Show Customer Data ---");
+        System.out.print("Customer ID: ");
+        int customerId = Integer.parseInt(sc.nextLine());
+        Customer customer = customerDAO.getCustomerByID(customerId);
 
-            if (customer != null) {
-                System.out.println(customer);
-                List<Account> accounts = accountDAO.getAccountsByCustomerID(customerId);
-                for (Account account : accounts) {
-                    System.out.println(account);
-                }
-            } else {
-                System.out.println("Customer not found.");
-            }
-        } catch (SQLException e) {
-            System.err.println("Error retrieving customer data: " + e.getMessage());
+        if (customer != null) {
+            System.out.println(customer);
+        } else {
+            System.out.println("Customer not found.");
         }
+    } catch (SQLException e) {
+        System.err.println("Error retrieving customer data: " + e.getMessage());
     }
+}
+
 
     // Method to show all customer data (admin only)
     public void showAllCustomerData() {
-        try {
-            System.out.println("\n--- Show All Customer Data ---");
-            List<Customer> customers = customerDAO.getAllCustomers();
-            for (Customer customer : customers) {
-                System.out.println(customer);
-                List<Account> accounts = accountDAO.getAccountsByCustomerID(customer.getID());
-                for (Account account : accounts) {
-                    System.out.println(account);
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error retrieving customer data: " + e.getMessage());
+    try {
+        System.out.println("\n--- Show All Customer Data ---");
+        List<Customer> customers = customerDAO.getAllCustomers();
+        for (Customer customer : customers) {
+            System.out.println(customer);
         }
+    } catch (SQLException e) {
+        System.err.println("Error retrieving customer data: " + e.getMessage());
     }
+}
+
 
     // Method to change customer data (admin only)
     public void changeCustomerData(Scanner sc) {
