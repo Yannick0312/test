@@ -69,24 +69,25 @@ public class Customer implements IPerson {
         this.account = account;
     }
 
+   @Override
     public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("ID = ").append(getID())
-      .append(", Surname = ").append(getSurname())
-      .append(", Name = ").append(getName())
-      .append(", Gender = ").append(getGender())
-      .append(", Birthday = ").append(getBirthday());
+        StringBuilder sb = new StringBuilder();
+        sb.append("ID = ").append(getID())
+          .append(", Surname = ").append(getSurname())
+          .append(", Name = ").append(getName())
+          .append(", Gender = ").append(getGender())
+          .append(", Birthday = ").append(getBirthday());
 
-    if (account != null) {
-        sb.append(", AccountID = ").append(account.getID())
-          .append(", Accountnumber = ").append(account.getAccountNumber())
-          .append(", Accountbalance = ").append(account.getBalance())
-          .append(", Accounttype = ").append(account.getAccountType());
-    } else {
-        sb.append(", No account information available.");
+        if (accounts != null && !accounts.isEmpty()) {
+            sb.append(", Accounts: ");
+            for (Account account : accounts) {
+                sb.append("\n\t").append(account);
+            }
+        } else {
+            sb.append(", No accounts available.");
+        }
+
+        return sb.toString();
     }
-
-    return sb.toString();
-}
 
 }
