@@ -207,6 +207,23 @@ public class MiniBankController {
         }
     }
 
+    public void listAllCustomerIDs() {
+    try {
+        List<Customer> customers = customerDAO.getAllCustomers();
+        if (customers.isEmpty()) {
+            System.out.println("Keine Kunden verfügbar.");
+            return;
+        }
+        System.out.println("Verfügbare Kunden:");
+        for (Customer customer : customers) {
+            System.out.println("Customer ID: " + customer.getID() + ", Name: " + customer.getName() + " " + customer.getSurname());
+        }
+    } catch (SQLException e) {
+        System.err.println("Fehler beim Abrufen der Kundenliste: " + e.getMessage());
+    }
+}
+
+
     // Helper method to generate a new account number
     private int generateAccountNumber() {
         // Implement logic to generate a unique account number
