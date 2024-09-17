@@ -46,5 +46,13 @@ public abstract class Account {
         }
     }
 
+    @Override
+    public String toString() {
+        return "AccountID = " + getID() +
+               ", AccountNumber = " + getAccountNumber() +
+               ", Balance = " + getBalance() +
+               ", AccountType = " + getAccountType();
+    }
+
     public abstract String getAccountType();
 }
