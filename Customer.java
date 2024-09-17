@@ -70,14 +70,23 @@ public class Customer implements IPerson {
     }
 
     public String toString() {
-        return  "ID = " + getID() +
-                ", Surname = " + getSurname() + 
-                ", Name = " + getName() +
-                ", Gender = " + getGender() +
-                ", Birthday = " + getBirthday() +
-                ", AccountID = " + account.getID() + 
-                ", Accountnumber = " + account.getAccountNumber() +
-                ", Accountbalance = " + account.getBalance() +
-                ", Accounttype = " + account.getAccountType();
+    StringBuilder sb = new StringBuilder();
+    sb.append("ID = ").append(getID())
+      .append(", Surname = ").append(getSurname())
+      .append(", Name = ").append(getName())
+      .append(", Gender = ").append(getGender())
+      .append(", Birthday = ").append(getBirthday());
+
+    if (account != null) {
+        sb.append(", AccountID = ").append(account.getID())
+          .append(", Accountnumber = ").append(account.getAccountNumber())
+          .append(", Accountbalance = ").append(account.getBalance())
+          .append(", Accounttype = ").append(account.getAccountType());
+    } else {
+        sb.append(", No account information available.");
     }
+
+    return sb.toString();
+}
+
 }
