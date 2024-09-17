@@ -140,6 +140,27 @@ public class MiniBankController {
     }
 }
 
+    public void listCustomerAccounts(Scanner sc) {
+    try {
+        System.out.println("\n--- List Customer Accounts ---");
+        System.out.print("Customer ID: ");
+        int customerId = Integer.parseInt(sc.nextLine());
+        List<Account> accounts = accountDAO.getAccountsByCustomerID(customerId);
+
+        if (accounts != null && !accounts.isEmpty()) {
+            System.out.println("Accounts for Customer ID " + customerId + ":");
+            for (Account account : accounts) {
+                System.out.println(account);
+            }
+        } else {
+            System.out.println("No accounts found for this customer.");
+        }
+    } catch (SQLException e) {
+        System.err.println("Error retrieving accounts: " + e.getMessage());
+    }
+}
+
+
 
     // Method to show all customer data (admin only)
     public void showAllCustomerData() {
