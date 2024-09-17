@@ -46,6 +46,26 @@ public class AccountDAO {
         }
     }
 
+// Method to retrieve all accounts associated with a specific customer ID
+    public List<Account> getAccountsByCustomerID(int customerId) throws SQLException {
+        String sql = "SELECT * FROM YA_Account WHERE CustomerID = ?";
+        List<Account> accounts = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, customerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Account account = mapResultSetToAccount(rs);
+                accounts.add(account);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error retrieving accounts for customer ID " + customerId + ": " + e.getMessage());
+        }
+
+        return accounts;
+    }
+
     // Helper method to map a ResultSet to an Account object
     private Account mapResultSetToAccount(ResultSet rs) throws SQLException {
         int id = rs.getInt("ID");
